@@ -1,4 +1,5 @@
 const express = require('express');
+const escape = require('escape-html');
 const app = express();
 
 app.get('/', (req, res) => {
@@ -8,7 +9,7 @@ app.get('/', (req, res) => {
 // Vulnerable endpoint (XSS)
 app.get('/user', (req, res) => {
   const name = req.query.name;
-  res.send("Hello " + name);
+  res.send("Hello " + escape(name || ""));
 });
 
 app.listen(3000, () => {
