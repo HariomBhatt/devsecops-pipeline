@@ -48,16 +48,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Start App
+      - name: Start Dummy App
         run: |
-          npm install
-          node app.js &
+          python3 -m http.server 8000 &
           sleep 10
 
       - name: Run ZAP Scan
         uses: zaproxy/action-full-scan@v0.7.0
         with:
-          target: 'http://localhost:3000'
+          target: 'http://localhost:8000'
 
   deploy:
     needs: [sast, sca, dast]
