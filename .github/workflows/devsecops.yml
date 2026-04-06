@@ -1,13 +1,6 @@
 name: DevSecOps Pipeline
 
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  security-events: write
+on: push
 
 jobs:
 
@@ -26,18 +19,24 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
   sca:
-    - name: SCA - Snyk
-      uses: snyk/actions/node@master
-      env:
-       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: test --severity-threshold=high
+    name: SCA - Snyk
+    runs-on: ubuntu-latest
+    needs: sast
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --severity-threshold=high
 
   dast:
-  name: DAST - OWASP ZAP
-  runs-on: ubuntu-latest
-  needs: sca
-  steps:
-    - name: Run ZAP Scan
-      run: |
-        docker run -t owasp/zap2docker-stable zap-baseline.py -t https://example.com
+    name: DAST - OWASP ZAP
+    runs-on: ubuntu-latest
+    needs: sca
+    steps:
+      - name: Run ZAP Scan
+        run: |
+          docker run -t owasp/zap2docker-stable zap-baseline.py -t https://example.com
