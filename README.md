@@ -342,7 +342,7 @@ app.use((req, res, next) => {
 
 > 4 High-severity alerts detected across `app.js` — including Reflected XSS, SQL Injection via user-controlled input, and missing rate limiting.
 
-![CodeQL SAST Findings](screenshots/sast-codeql.png)
+![CodeQL SAST Findings](SAST.png)
 
 ---
 
@@ -350,15 +350,17 @@ app.use((req, res, next) => {
 
 > Snyk automatically raised Pull Request #2 to upgrade `sqlite3` from `5.1.7` → `6.0.1`, resolving a known critical vulnerability.
 
-![Snyk SCA PR](screenshots/sca-snyk-pr.png)
+![Snyk SCA PR](SCA.png)
 
 ---
 
 ### 🌐 DAST — OWASP ZAP Scan Report
 
-> ZAP baseline scan against the live running application detected 10 alerts including missing CSP headers, clickjacking exposure, and server information leakage.
+> ZAP baseline scan against the live running application detected **10 alerts** including missing CSP headers, clickjacking exposure, and server information leakage.
 
-> 📥 Full ZAP report available as a GitHub Actions Artifact: **`zap-report`** (`report.html`, `report.json`, `report.md`)
+> 📄 Full ZAP Markdown report is available directly in this repository: **[`report.md`](report.md)**
+>
+> 📥 Full ZAP HTML/JSON report also available as a GitHub Actions Artifact: **`zap-report`** (`report.html`, `report.json`, `report.md`)
 
 ---
 
