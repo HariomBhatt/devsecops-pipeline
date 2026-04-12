@@ -50,29 +50,46 @@ jobs:
       - name: Run Snyk Scan
         run: snyk test --severity-threshold=high || true
 
+        
 
   DAST:
     runs-on: ubuntu-latest
-    needs: SCA  
+    needs: SCA
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
+  
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
+  
       - name: Install Dependencies
         run: npm install
-
+  
       - name: Start Node App
         run: |
           node app.js &
           sleep 10
-
+  
+  
       - name: Run OWASP ZAP Scan
-        uses: zaproxy/action-baseline@v0.10.0
+        run: |
+          docker run --rm \
+            -v $(pwd):/zap/wrk/:rw \
+            -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+            -t http://localhost:3000 \
+            -r report.html \
+            -w report.md \
+            -J report.json
+  
+    
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
         with:
-          target: 'http://localhost:3000'
-        
+          name: zap-report
+          path: |
+            report.html
+            report.md
+            report.json
+          
