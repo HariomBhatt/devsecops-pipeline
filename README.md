@@ -359,8 +359,6 @@ app.use((req, res, next) => {
 > ZAP baseline scan against the live running application detected **10 alerts** including missing CSP headers, clickjacking exposure, and server information leakage.
 
 > 📄 Full ZAP Markdown report is available directly in this repository: **[`DAST_zap_report.md`](DAST_zap_report.md)**
->
-> 📥 Full ZAP HTML/JSON report also available as a GitHub Actions Artifact: **`zap-report`** (`report.html`, `report.json`, `report.md`)
 
 ---
 
