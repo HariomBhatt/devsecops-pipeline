@@ -70,17 +70,18 @@ jobs:
       - name: Start Node App
         run: |
           node app.js &
-          sleep 10
+          sleep 15
   
   
       - name: Run OWASP ZAP Scan
         run: |
           docker run --rm \
+            --network="host" \
             --user root \
             -v $(pwd):/zap/wrk/:rw \
             ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py \
-            -t http://localhost:3000 \
+            -t http://127.0.0.1:3000 \
             -r report.html \
             -w report.md \
             -J report.json
