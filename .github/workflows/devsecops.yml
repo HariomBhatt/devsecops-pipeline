@@ -84,7 +84,8 @@ jobs:
             -t http://127.0.0.1:3000 \
             -r report.html \
             -w report.md \
-            -J report.json
+            -J report.json \
+            -I
   
     
       - name: Upload ZAP Report
